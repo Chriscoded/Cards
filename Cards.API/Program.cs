@@ -1,3 +1,7 @@
+using Cards.API.Data;
+using Microsoft.EntityFrameworkCore;
+using System;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -8,7 +12,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 //Inject DbContext
+builder.Services.AddDbContext<CardsDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("CardsDbConnectionStrings")));
 
+//builder.Services.AddDbContextPool<CardsDbContext>(
+  //              options => options.UseSqlServer(builder.Configuration.GetConnectionString("CardsDbConnectionStrings")));
 
 var app = builder.Build();
 
