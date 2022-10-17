@@ -15,7 +15,7 @@ namespace Cards.API.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CardholderName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CardNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CardNumber = table.Column<int>(type: "int", nullable: false),
                     ExpiryMonth = table.Column<int>(type: "int", nullable: false),
                     ExpiryYear = table.Column<int>(type: "int", nullable: false),
                     CVC = table.Column<int>(type: "int", nullable: false)

@@ -5,7 +5,7 @@ namespace Cards.API.Data
 {
     public class CardsDbContext : DbContext
     {
-        public CardsDbContext(DbContextOptions<CardsDbContext> options) : base(options)  
+        public CardsDbContext(DbContextOptions options) : base(options)  
         {
 
         }

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cards.API.Migrations
 {
     [DbContext(typeof(CardsDbContext))]
-    [Migration("20221017055439_initial")]
+    [Migration("20221017082020_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,9 +33,8 @@ namespace Cards.API.Migrations
                     b.Property<int>("CVC")
                         .HasColumnType("int");
 
-                    b.Property<string>("CardNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("CardNumber")
+                        .HasColumnType("int");
 
                     b.Property<string>("CardholderName")
                         .IsRequired()

@@ -32,7 +32,7 @@ namespace Cards.API.Controllers
 
         //get a single card
         [HttpGet]
-        [Route("id:guid")]
+        [Route("{id:guid}")]
         [ActionName("GetCard")]
         public async Task<IActionResult> GetCard([FromRoute] Guid id)
         {
@@ -47,7 +47,7 @@ namespace Cards.API.Controllers
 
                 return NotFound("Card not found");
             }
-            return BadRequest();
+            return BadRequest("Id is null");
         }
 
         //Add card
@@ -61,15 +61,48 @@ namespace Cards.API.Controllers
                 var result = await cardsDbContext.Cards.AddAsync(card); 
                 var save = await cardsDbContext.SaveChangesAsync();
 
-                return CreatedAtAction(nameof(GetCard), card.Id, card);
+                return CreatedAtAction(nameof(GetCard), new { id = card.Id }, card);
 
             }
             return BadRequest();
         }
 
-       
+        //updating cards
+        [HttpPut]
+        [Route("{id:guid}")]
+        public async Task<IActionResult> UpdateCard([FromRoute] Guid id, [FromBody] Card card)
+        {
+            var existingCard = await cardsDbContext.Cards.FirstOrDefaultAsync(x => x.Id == id);
+            if (existingCard != null)
+            {
+                existingCard.CardholderName = card.CardholderName;
+                existingCard.CardNumber = card.CardNumber;
+                existingCard.ExpiryMonth = card.ExpiryMonth;
+                existingCard.ExpiryYear = card.ExpiryYear;
+                existingCard.CVC = card.CVC;
 
-        
+                var save = await cardsDbContext.SaveChangesAsync();
+                return Ok(existingCard);            
+            }
+            return NotFound("Card not found");
+        }
+
+        //updating cards
+        [HttpDelete]
+        [Route("{id:guid}")]
+        public async Task<IActionResult> DeleteCard([FromRoute] Guid id)
+        {
+            var existingCard = await cardsDbContext.Cards.FirstOrDefaultAsync(x => x.Id == id);
+            if (existingCard != null)
+            {
+                cardsDbContext.Cards.Remove(existingCard);
+                var save = await cardsDbContext.SaveChangesAsync();
+                return Ok(existingCard);
+            }
+            return NotFound("Card not found");
+        }
+
+
 
     }
 }

@@ -31,9 +31,8 @@ namespace Cards.API.Migrations
                     b.Property<int>("CVC")
                         .HasColumnType("int");
 
-                    b.Property<string>("CardNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("CardNumber")
+                        .HasColumnType("int");
 
                     b.Property<string>("CardholderName")
                         .IsRequired()
