@@ -12,10 +12,19 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 //Inject DbContext
-builder.Services.AddDbContext<CardsDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("CardsDbConnectionStrings")));
+builder.Services.AddDbContext<CardsDbContext>(options => 
+options.UseSqlServer(builder.Configuration.GetConnectionString("CardsDbConnectionStrings")));
 
 //builder.Services.AddDbContextPool<CardsDbContext>(
   //              options => options.UseSqlServer(builder.Configuration.GetConnectionString("CardsDbConnectionStrings")));
+
+builder.Services.AddCors((setup) =>
+    {
+        setup.AddPolicy("default", (options) =>
+        {
+            options.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin();
+        });
+});
 
 var app = builder.Build();
 
@@ -25,7 +34,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseCors("default");
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
